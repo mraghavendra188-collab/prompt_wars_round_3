@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Election Process Education</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #142040;
+    --blue: #1a4b8c;
+    --accent: #c8a84b;
+    --accent-light: #e8c96a;
+    --red: #c0392b;
+    --white: #f8f6f0;
+    --text-muted: #8a9ab5;
+    --card-bg: #0f1e38;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(10,22,40,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,168,75,0.15);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
+    color: var(--text-muted); text-decoration: none; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 30%, rgba(26,75,140,0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(200,168,75,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(192,57,43,0.1) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,168,75,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,168,75,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(200,168,75,0.4);
+    padding: 0.4rem 1.1rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .badge::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--accent); border-radius: 50%;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 900; line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 16ch;
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 1.1rem; font-weight: 300;
+    color: var(--text-muted);
+    max-width: 54ch; margin: 1.8rem auto 3rem;
+    line-height: 1.7;
+    animation: fadeUp 0.9s 0.2s ease both;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 0.9s 0.3s ease both;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--accent); color: var(--navy);
+    font-size: 0.9rem; font-weight: 600; letter-spacing: 0.04em;
+    padding: 0.85rem 2.2rem; border-radius: 2px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: transparent; color: var(--white);
+    font-size: 0.9rem; font-weight: 500; letter-spacing: 0.04em;
+    padding: 0.85rem 2.2rem; border-radius: 2px;
+    text-decoration: none; border: 1px solid rgba(255,255,255,0.2); cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .btn-outline:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-muted); animation: fadeUp 1s 0.6s ease both;
+  }
+  .scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, var(--text-muted), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* ── STATS ── */
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(200,168,75,0.15);
+    border-bottom: 1px solid rgba(200,168,75,0.15);
+  }
+  .stat-item {
+    padding: 2.5rem;
+    border-right: 1px solid rgba(200,168,75,0.1);
+    text-align: center;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem; font-weight: 700;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted); margin-top: 0.4rem;
+  }
+
+  /* ── SECTIONS ── */
+  section { position: relative; }
+  .section-inner { max-width: 1200px; margin: 0 auto; padding: 6rem 2rem; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700; line-height: 1.15;
+    max-width: 18ch;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+  .section-desc {
+    font-size: 1rem; font-weight: 300; color: var(--text-muted);
+    line-height: 1.75; max-width: 50ch; margin-top: 1.2rem;
+  }
+
+  /* ── TIMELINE ── */
+  #timeline { background: var(--navy-mid); }
+  .timeline-wrap {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: start; margin-top: 4rem;
+  }
+  .timeline-list { position: relative; }
+  .tl-item {
+    display: flex; gap: 1.5rem; margin-bottom: 2.5rem;
+    cursor: pointer; transition: opacity 0.2s;
+  }
+  .tl-item:hover { opacity: 1 !important; }
+  .tl-num {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 2px solid rgba(200,168,75,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700; color: var(--accent);
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .tl-item.active .tl-num {
+    background: var(--accent); color: var(--navy);
+    border-color: var(--accent);
+  }
+  .tl-content h3 {
+    font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem;
+  }
+  .tl-content p {
+    font-size: 0.875rem; color: var(--text-muted); line-height: 1.65;
+  }
+  .tl-panel {
+    background: var(--card-bg);
+    border: 1px solid rgba(200,168,75,0.12);
+    border-radius: 4px;
+    padding: 2.5rem;
+    position: sticky; top: 120px;
+  }
+  .tl-panel-icon {
+    font-size: 2.5rem; margin-bottom: 1.2rem;
+  }
+  .tl-panel h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700; margin-bottom: 0.8rem;
+  }
+  .tl-panel p {
+    font-size: 0.9rem; color: var(--text-muted); line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+  .tl-tag {
+    display: inline-block;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+    border: 1px solid rgba(200,168,75,0.35);
+    padding: 0.3rem 0.8rem; border-radius: 2px;
+    margin-right: 0.4rem; margin-top: 0.4rem;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: rgba(200,168,75,0.08);
+    border: 1px solid rgba(200,168,75,0.08);
+    margin-top: 4rem;
+  }
+  .step-card {
+    background: var(--navy);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .step-card:hover { background: var(--navy-mid); }
+  .step-card::before {
+    content: attr(data-n);
+    position: absolute; top: -0.5rem; right: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem; font-weight: 900;
+    color: rgba(200,168,75,0.05);
+    line-height: 1;
+  }
+  .step-icon {
+    width: 48px; height: 48px;
+    border-radius: 4px;
+    background: rgba(200,168,75,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+  .step-card h3 {
+    font-size: 1rem; font-weight: 600; margin-bottom: 0.6rem;
+  }
+  .step-card p {
+    font-size: 0.855rem; color: var(--text-muted); line-height: 1.7;
+  }
+
+  /* ── QUIZ ── */
+  #quiz { background: var(--navy-mid); }
+  .quiz-box {
+    max-width: 700px; margin: 4rem auto 0;
+    background: var(--card-bg);
+    border: 1px solid rgba(200,168,75,0.15);
+    border-radius: 4px;
+    padding: 3rem;
+  }
+  .quiz-progress {
+    display: flex; gap: 6px; margin-bottom: 2rem;
+  }
+  .quiz-pip {
+    flex: 1; height: 3px; border-radius: 2px;
+    background: rgba(255,255,255,0.1);
+    transition: background 0.3s;
+  }
+  .quiz-pip.done { background: var(--accent); }
+  .quiz-q {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    line-height: 1.4; margin-bottom: 2rem;
+  }
+  .quiz-opts { display: flex; flex-direction: column; gap: 0.75rem; }
+  .quiz-opt {
+    display: flex; align-items: center; gap: 1rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 3px;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-size: 0.9rem;
+  }
+  .quiz-opt:hover { border-color: var(--accent); background: rgba(200,168,75,0.05); }
+  .quiz-opt.correct { border-color: #27ae60; background: rgba(39,174,96,0.1); }
+  .quiz-opt.wrong { border-color: var(--red); background: rgba(192,57,43,0.1); }
+  .opt-letter {
+    width: 28px; height: 28px; border-radius: 2px;
+    background: rgba(200,168,75,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700; color: var(--accent);
+    flex-shrink: 0;
+  }
+  .quiz-feedback {
+    margin-top: 1.5rem; padding: 1rem 1.2rem;
+    border-radius: 3px; font-size: 0.88rem; display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct { background: rgba(39,174,96,0.1); border: 1px solid rgba(39,174,96,0.3); color: #5dce8a; }
+  .quiz-feedback.wrong { background: rgba(192,57,43,0.1); border: 1px solid rgba(192,57,43,0.3); color: #e57368; }
+  .quiz-next {
+    margin-top: 1.5rem;
+    display: none;
+  }
+  .quiz-next.show { display: flex; }
+  .quiz-score {
+    text-align: center; display: none;
+  }
+  .quiz-score.show { display: block; }
+  .score-circle {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 3px solid var(--accent);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+  }
+  .score-n {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; color: var(--accent);
+  }
+  .score-d { font-size: 0.75rem; color: var(--text-muted); }
+
+  /* ── GLOSSARY ── */
+  .glossary-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1rem; margin-top: 3rem;
+  }
+  .glossary-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(200,168,75,0.1);
+    border-radius: 3px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .glossary-card:hover { border-color: rgba(200,168,75,0.4); }
+  .glossary-term {
+    font-size: 0.85rem; font-weight: 600; color: var(--accent);
+    letter-spacing: 0.06em; margin-bottom: 0.5rem;
+  }
+  .glossary-def {
+    font-size: 0.855rem; color: var(--text-muted); line-height: 1.65;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(26,75,140,0.3) 0%, rgba(200,168,75,0.1) 100%);
+    border-top: 1px solid rgba(200,168,75,0.15);
+    border-bottom: 1px solid rgba(200,168,75,0.15);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  footer p { font-size: 0.8rem; color: var(--text-muted); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; } 50% { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .timeline-wrap { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .glossary-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav role="navigation" aria-label="Main navigation">
+  <div class="nav-logo">ElectED</div>
+  <ul class="nav-links">
+    <li><a href="#timeline">Process</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+    <li><a href="#glossary">Glossary</a></li>
+  </ul>
+  <a class="btn-primary" href="#quiz" style="padding:0.6rem 1.4rem;font-size:0.8rem;">Take the Quiz</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" aria-labelledby="hero-h1">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="badge">Civic Education Platform</div>
+  <h1 id="hero-h1">Understand the <em>Election</em> Process</h1>
+  <p class="hero-sub">An interactive guide to how elections work — from voter registration to ballot counting — designed to make civic participation clear, accessible, and empowering.</p>
+  <div class="hero-cta">
+    <a class="btn-primary" href="#timeline">Explore the Process ↓</a>
+    <a class="btn-outline" href="#quiz">Test Your Knowledge</a>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats" role="region" aria-label="Key statistics">
+  <div class="stat-item reveal">
+    <div class="stat-num">6</div>
+    <div class="stat-label">Phases Explained</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num">10+</div>
+    <div class="stat-label">Key Terms Defined</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num">5</div>
+    <div class="stat-label">Quiz Questions</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Free to Access</div>
+  </div>
+</div>
+
+<!-- TIMELINE SECTION -->
+<section id="timeline" aria-labelledby="tl-title">
+  <div class="section-inner">
+    <p class="section-label reveal">The Election Timeline</p>
+    <h2 class="section-title reveal" id="tl-title">From Candidacy to <em>Certification</em></h2>
+    <p class="section-desc reveal">Every election follows a structured timeline. Click each phase to learn more about what happens and why it matters.</p>
+
+    <div class="timeline-wrap">
+      <div class="timeline-list" role="list" aria-label="Election phases">
+        <!-- items injected by JS -->
+      </div>
+      <div class="tl-panel" aria-live="polite" aria-label="Phase details">
+        <!-- panel content injected by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" aria-labelledby="how-title">
+  <div class="section-inner">
+    <p class="section-label reveal">How It Works</p>
+    <h2 class="section-title reveal" id="how-title">Steps Every <em>Voter</em> Should Know</h2>
+    <p class="section-desc reveal">Participating in an election is straightforward when you know the steps. Here's your complete guide.</p>
+
+    <div class="steps-grid reveal" role="list">
+      <div class="step-card" data-n="01" role="listitem">
+        <div class="step-icon" aria-hidden="true">📋</div>
+        <h3>Register to Vote</h3>
+        <p>Eligible citizens must register before the registration deadline. Requirements vary by region — check your local election authority for deadlines and eligibility criteria.</p>
+      </div>
+      <div class="step-card" data-n="02" role="listitem">
+        <div class="step-icon" aria-hidden="true">🗓</div>
+        <h3>Know the Election Date</h3>
+        <p>Elections are held on specific dates set by law. Mark your calendar, set a reminder, and find your polling station in advance so nothing is left to chance on election day.</p>
+      </div>
+      <div class="step-card" data-n="03" role="listitem">
+        <div class="step-icon" aria-hidden="true">📰</div>
+        <h3>Research the Candidates</h3>
+        <p>Study candidate platforms, policy positions, debates, and endorsements. Use trusted, non-partisan sources to form your own informed opinion before you vote.</p>
+      </div>
+      <div class="step-card" data-n="04" role="listitem">
+        <div class="step-icon" aria-hidden="true">🗳</div>
+        <h3>Cast Your Ballot</h3>
+        <p>Bring required ID to your polling station, follow instructions carefully, and mark your ballot clearly. Your vote is private and protected by law.</p>
+      </div>
+      <div class="step-card" data-n="05" role="listitem">
+        <div class="step-icon" aria-hidden="true">🔢</div>
+        <h3>Votes Are Counted</h3>
+        <p>After polls close, election officials count all ballots — in-person, mail-in, and provisional — under strict bipartisan observation to ensure accuracy and transparency.</p>
+      </div>
+      <div class="step-card" data-n="06" role="listitem">
+        <div class="step-icon" aria-hidden="true">✅</div>
+        <h3>Results Are Certified</h3>
+        <p>Preliminary results are announced on election night, but official certification follows an audit process that may take days or weeks, confirming the final outcome.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" aria-labelledby="quiz-title">
+  <div class="section-inner">
+    <p class="section-label reveal">Knowledge Check</p>
+    <h2 class="section-title reveal" id="quiz-title">Test What You've <em>Learned</em></h2>
+    <p class="section-desc reveal">Five questions to check your understanding of the election process. Choose carefully!</p>
+
+    <div class="quiz-box reveal" role="region" aria-label="Election quiz">
+      <div class="quiz-progress" aria-label="Quiz progress" role="progressbar" aria-valuemin="0" aria-valuemax="5" id="progress-bar">
+        <div class="quiz-pip" id="p1"></div>
+        <div class="quiz-pip" id="p2"></div>
+        <div class="quiz-pip" id="p3"></div>
+        <div class="quiz-pip" id="p4"></div>
+        <div class="quiz-pip" id="p5"></div>
+      </div>
+      <div id="quiz-content"></div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section id="glossary" aria-labelledby="gloss-title">
+  <div class="section-inner">
+    <p class="section-label reveal">Key Terms</p>
+    <h2 class="section-title reveal" id="gloss-title">Election <em>Glossary</em></h2>
+    <p class="section-desc reveal">Understand the language of democracy. These essential terms will help you follow election news with confidence.</p>
+
+    <div class="glossary-grid" role="list">
+      <div class="glossary-card reveal" role="listitem">
+        <div class="glossary-term">Ballot</div>
+        <div class="glossary-def">The official document used to record a voter's choices. Ballots may be paper, electronic, or mailed, depending on the jurisdiction.</div>
+      </div>
+      <div class="glossary-card reveal" role="listitem">
+        <div class="glossary-term">Candidate</div>
+        <div class="glossary-def">A person who has officially declared their intention to run for a public office, and meets the legal eligibility requirements to do so.</div>
+      </div>
+      <div class="glossary-card reveal" role="listitem">
+        <div class="glossary-term">Electoral College</div>
+        <div class="glossary-def">In the US, a body of electors established by the Constitution who formally elect the President and Vice President every four years.</div>
+      </div>
+      <div class="glossary-card reveal" role="listitem">
+        <div class="glossary-term">Primary Election</div>
+        <div class="glossary-def">A preliminary election in which voters select a political party's candidate to stand in the subsequent general election.</div>
+      </div>
+      <div class="glossary-card reveal" role="listitem">
+        <div class="glossary-term">Polling Station</div>
+        <div class="glossary-def">A designated location where registered voters go to cast their votes on election day, staffed by trained election officials.</div>
+      </div>
+      <div class="glossary-card reveal" role="listitem">
+        <div class="glossary-term">Provisional Ballot</div>
+        <div class="glossary-def">A ballot cast when there is a question about a voter's eligibility. It is set aside and counted only after eligibility is verified.</div>
+      </div>
+      <div class="glossary-card reveal" role="listitem">
+        <div class="glossary-term">Voter Registration</div>
+        <div class="glossary-def">The process by which eligible citizens formally enroll to vote. Most jurisdictions require registration before a deadline to be eligible.</div>
+      </div>
+      <div class="glossary-card reveal" role="listitem">
+        <div class="glossary-term">Certification</div>
+        <div class="glossary-def">The official process by which election results are confirmed and declared final by the relevant election authority after all votes are counted and verified.</div>
+      </div>
+      <div class="glossary-card reveal" role="listitem">
+        <div class="glossary-term">Absentee / Mail-in Ballot</div>
+        <div class="glossary-def">A ballot completed and returned by mail, allowing voters to participate without visiting a polling station in person.</div>
+      </div>
+      <div class="glossary-card reveal" role="listitem">
+        <div class="glossary-term">Recount</div>
+        <div class="glossary-def">A process of counting votes a second time, typically triggered when results are extremely close or when candidates dispute the initial count.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" aria-labelledby="cta-title">
+  <div class="section-inner" style="text-align:center;">
+    <p class="section-label reveal" style="justify-content:center;display:flex;">Ready to Participate?</p>
+    <h2 class="section-title reveal" id="cta-title" style="max-width:100%;text-align:center;margin:0 auto;">Your Vote is Your <em>Voice</em></h2>
+    <p class="section-desc reveal" style="margin:1.2rem auto 2.5rem;text-align:center;">Democracy works when citizens are informed and engaged. Share this resource with friends and family to help them understand the process too.</p>
+    <div class="hero-cta reveal">
+      <a class="btn-primary" href="#quiz">Retake the Quiz</a>
+      <a class="btn-outline" href="#timeline">Review the Process</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="nav-logo">ElectED</div>
+  <p>Election Process Education · Civic Participation · Informed Voting</p>
+  <p style="font-size:0.75rem;color:var(--text-muted);">Non-partisan educational resource</p>
+</footer>
+
+<script>
+/* ── TIMELINE DATA ── */
+const phases = [
+  {
+    icon: '📣',
+    title: 'Candidacy Declaration',
+    short: 'Candidates formally announce their intent to run and file with the election authority.',
+    detail: 'Before a person can appear on the ballot, they must formally declare their candidacy, meet eligibility requirements (age, residency, citizenship), and file the necessary paperwork with the relevant election authority. They may also need to collect a minimum number of nomination signatures from registered voters.',
+    tags: ['Filing Period', 'Eligibility Check', 'Nomination'],
+  },
+  {
+    icon: '🏛',
+    title: 'Primary / Nomination',
+    short: 'Parties select their official candidate through a primary election or caucus process.',
+    detail: 'In the primary phase, political parties narrow their field to a single nominee. This can take the form of a primary election (where registered voters cast ballots), a caucus (a community meeting with public alignment), or a party convention. The winner advances to the general election.',
+    tags: ['Primary Election', 'Caucus', 'Convention'],
+  },
+  {
+    icon: '📝',
+    title: 'Voter Registration',
+    short: 'Eligible citizens register before the registration deadline to be eligible to vote.',
+    detail: 'Most jurisdictions require voters to register ahead of election day. Registration typically involves submitting personal information (name, address, citizenship status) to election authorities. Some places allow same-day registration, while others require registration weeks in advance. Always verify your registration status.',
+    tags: ['Eligibility', 'Deadline', 'ID Requirements'],
+  },
+  {
+    icon: '📣',
+    title: 'Campaign Period',
+    short: 'Candidates campaign to persuade voters through debates, ads, and outreach.',
+    detail: 'During the campaign period, candidates actively seek voter support through public rallies, debates, advertising, door-to-door canvassing, and social media outreach. Campaign finance laws regulate how money can be raised and spent. Voters should seek information from multiple, verified sources to form balanced opinions.',
+    tags: ['Debates', 'Campaigning', 'Finance Disclosure'],
+  },
+  {
+    icon: '🗳',
+    title: 'Election Day',
+    short: 'Registered voters cast their ballots at polling stations or by mail.',
+    detail: 'On election day, polling stations open for a set period (often 12–14 hours). Voters verify their identity, receive a ballot, and cast their vote privately. Mail-in and absentee ballots submitted before election day are also collected. Bipartisan poll watchers observe the process to ensure integrity.',
+    tags: ['Polls Open', 'Ballots Cast', 'Accessibility'],
+  },
+  {
+    icon: '✅',
+    title: 'Counting & Certification',
+    short: 'Officials count all ballots, audit results, and officially certify the outcome.',
+    detail: 'After polls close, officials count all valid ballots — including provisional and mail-in ballots — under observation. Preliminary results are reported on election night. A formal canvass and audit process follows before results are officially certified. In close races, recounts may be triggered automatically or by petition.',
+    tags: ['Canvass', 'Audit', 'Official Certification'],
+  },
+];
+
+const tlList = document.querySelector('.timeline-list');
+const tlPanel = document.querySelector('.tl-panel');
+let activeIdx = 0;
+
+function renderTimeline(idx) {
+  tlList.innerHTML = '';
+  phases.forEach((p, i) => {
+    const el = document.createElement('div');
+    el.className = 'tl-item' + (i === idx ? ' active' : '');
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('aria-pressed', i === idx ? 'true' : 'false');
+    el.setAttribute('aria-label', `Phase ${i+1}: ${p.title}`);
+    el.innerHTML = `
+      <div class="tl-num">${i+1}</div>
+      <div class="tl-content">
+        <h3>${p.title}</h3>
+        <p>${p.short}</p>
+      </div>`;
+    el.addEventListener('click', () => { activeIdx = i; renderTimeline(i); });
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { activeIdx = i; renderTimeline(i); } });
+    tlList.appendChild(el);
+  });
+
+  const p = phases[idx];
+  tlPanel.innerHTML = `
+    <div class="tl-panel-icon" aria-hidden="true">${p.icon}</div>
+    <h2>${p.title}</h2>
+    <p>${p.detail}</p>
+    <div aria-label="Related topics">${p.tags.map(t => `<span class="tl-tag">${t}</span>`).join('')}</div>`;
+}
+renderTimeline(0);
+
+/* ── QUIZ DATA ── */
+const questions = [
+  {
+    q: 'What is the first legal step a person must take before running for public office?',
+    opts: ['Campaign on social media', 'Formally declare candidacy and file with election authorities', 'Win a primary election', 'Raise campaign funds'],
+    ans: 1,
+    feedback: 'Correct! Candidates must formally declare their intent and file official paperwork with the relevant election authority before anything else.',
+    wrongFeedback: 'Not quite. Before campaigning or raising funds, candidates must formally declare their candidacy and file with election authorities.',
+  },
+  {
+    q: 'What is the purpose of a primary election?',
+    opts: ['To certify the final election results', 'To count mail-in ballots', 'To allow a political party to select its nominee for the general election', 'To register new voters'],
+    ans: 2,
+    feedback: 'Correct! A primary election is how political parties select the single candidate who will represent them in the general election.',
+    wrongFeedback: 'Not quite. A primary election is used by political parties to narrow their field down to one nominee for the general election.',
+  },
+  {
+    q: 'What is a provisional ballot?',
+    opts: ['A ballot cast by a government official', 'A ballot set aside when there is a question about voter eligibility', 'A test ballot used for training', 'A ballot used only in primary elections'],
+    ans: 1,
+    feedback: 'Correct! A provisional ballot is set aside when a voter\'s eligibility is in question, and counted only after eligibility is confirmed.',
+    wrongFeedback: 'Not quite. A provisional ballot is cast when there\'s a question about eligibility — it\'s set aside and counted only after verification.',
+  },
+  {
+    q: 'What happens during the "certification" phase of an election?',
+    opts: ['Candidates register to run', 'Polling stations open to voters', 'Results are officially confirmed as final by election authorities', 'Campaign advertisements are reviewed'],
+    ans: 2,
+    feedback: 'Correct! Certification is the formal process by which election authorities audit the count and officially declare the results final.',
+    wrongFeedback: 'Not quite. Certification is when authorities officially audit and confirm the vote count, declaring the results final.',
+  },
+  {
+    q: 'Which of the following BEST describes why voter registration exists?',
+    opts: ['To limit who can vote to wealthy citizens', 'To allow election officials to prepare accurate voter rolls and verify eligibility', 'To generate revenue for the government', 'To ensure only one party wins'],
+    ans: 1,
+    feedback: 'Correct! Registration allows officials to verify eligibility and maintain accurate voter rolls, which supports a fair and organised election.',
+    wrongFeedback: 'Not quite. Registration exists so officials can verify eligibility and maintain accurate voter rolls for an organised, fair election.',
+  },
+];
+
+let qIdx = 0, score = 0, answered = false;
+
+function renderQuiz() {
+  const qc = document.getElementById('quiz-content');
+  if (qIdx >= questions.length) {
+    qc.innerHTML = `
+      <div class="quiz-score show" role="status" aria-live="polite">
+        <div class="score-circle">
+          <span class="score-n">${score}/${questions.length}</span>
+          <span class="score-d">Your Score</span>
+        </div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:0.8rem;">${score===questions.length?'Perfect Score!':score>=3?'Well Done!':'Keep Learning!'}</h3>
+        <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.7;margin-bottom:1.5rem;">${score===questions.length?'Outstanding! You have a strong understanding of the election process.':score>=3?'Great job! Review the timeline section to strengthen any gaps.':'No worries — revisit the guide above and try again.'}</p>
+        <button class="btn-primary" onclick="qIdx=0;score=0;answered=false;updatePips();renderQuiz()">Try Again</button>
+      </div>`;
+    return;
+  }
+
+  updatePips();
+  const q = questions[qIdx];
+  const letters = ['A','B','C','D'];
+  answered = false;
+
+  qc.innerHTML = `
+    <p style="font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1rem;">Question ${qIdx+1} of ${questions.length}</p>
+    <p class="quiz-q" id="q-text">${q.q}</p>
+    <div class="quiz-opts" role="radiogroup" aria-labelledby="q-text">
+      ${q.opts.map((o,i)=>`
+        <div class="quiz-opt" role="radio" aria-checked="false" tabindex="0" data-i="${i}" onclick="handleOpt(${i})" onkeydown="if(event.key==='Enter'||event.key===' ')handleOpt(${i})">
+          <span class="opt-letter" aria-hidden="true">${letters[i]}</span>
+          <span>${o}</span>
+        </div>`).join('')}
+    </div>
+    <div class="quiz-feedback" id="qfb" role="alert" aria-live="assertive"></div>
+    <div class="quiz-next" id="qnext" style="justify-content:flex-end;">
+      <button class="btn-primary" onclick="nextQ()">${qIdx < questions.length-1 ? 'Next Question →' : 'See Results →'}</button>
+    </div>`;
+}
+
+function handleOpt(i) {
+  if (answered) return;
+  answered = true;
+  const q = questions[qIdx];
+  const opts = document.querySelectorAll('.quiz-opt');
+  const fb = document.getElementById('qfb');
+  const nxt = document.getElementById('qnext');
+
+  opts.forEach((o,j) => {
+    o.setAttribute('tabindex', '-1');
+    if (j === q.ans) o.classList.add('correct');
+    if (j === i && i !== q.ans) o.classList.add('wrong');
+  });
+
+  if (i === q.ans) {
+    score++;
+    fb.className = 'quiz-feedback show correct';
+    fb.textContent = q.feedback;
+  } else {
+    fb.className = 'quiz-feedback show wrong';
+    fb.textContent = q.wrongFeedback;
+  }
+  nxt.classList.add('show');
+}
+
+function nextQ() { qIdx++; renderQuiz(); }
+
+function updatePips() {
+  for (let i = 1; i <= 5; i++) {
+    const pip = document.getElementById('p'+i);
+    if (pip) pip.className = 'quiz-pip' + (i <= qIdx ? ' done' : '');
+  }
+  const pb = document.getElementById('progress-bar');
+  if (pb) pb.setAttribute('aria-valuenow', qIdx);
+}
+
+renderQuiz();
+
+/* ── SCROLL REVEAL ── */
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+reveals.forEach(r => io.observe(r));
+</script>
+</body>
+</html>
