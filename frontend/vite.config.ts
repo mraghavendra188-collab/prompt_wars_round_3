@@ -5,7 +5,7 @@ import react from "@vitejs/plugin-react";
 // In dev, proxy API calls to the FastAPI backend so the SPA and API share an
 // origin (mirroring the single-container production setup).
 export default defineConfig({
-  base: process.env.GITHUB_PAGES === "true" ? "/Carbon-Footprint-Awareness-Platform/" : "/",
+  base: process.env.GITHUB_PAGES === "true" ? "/prompt_wars_round_3/" : "/",
   plugins: [react()],
   server: {
     proxy: {
